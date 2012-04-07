@@ -1,0 +1,11 @@
+<header>
+  <%= image_tag("logo.png", :alt => "Application exemple", :class => "round") %>
+  <nav class="round">
+    <ul>
+      <li><%= link_to "Accueil", root_path %></li>
+      <li><%= link_to "Aide", help_path %></li>
+      <li><%= link_to "Inscription", "signup_path" %></li>
+      <li><%= link_to "Connexion", "signin_path" %></li>
+    </ul>
+  </nav>
+</header>
