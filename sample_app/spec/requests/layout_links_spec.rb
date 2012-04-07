@@ -19,4 +19,40 @@ describe "LayoutLinks" do
     get '/help'
     response.should have_selector('title', :content => "Aide")
   end
+  
+  it "devrait avoir une page d'inscription a '/signup'" do
+    get '/signup'
+    response.should have_selector('title', :content => "Inscription")
+  end
+  
+  it "devrait avoir le bon lien sur le layout A Propos" do
+    visit root_path
+    click_link "A Propos"
+    response.should have_selector('title', :content => "A Propos")
+  end
+  
+  it "devrait avoir le bon lien sur le layout Aide" do
+    visit root_path
+    click_link "Aide"
+    response.should have_selector('title', :content => "Aide")
+  end
+  
+  it "devrait avoir le bon lien sur le layout Contact" do
+    visit root_path
+    click_link "Contact"
+    response.should have_selector('title', :content => "Contact")
+  end
+  
+  it "devrait avoir le bon lien sur le layout Accueil" do
+    visit root_path
+    click_link "Accueil"
+    response.should have_selector('title', :content => "Accueil")
+  end
+  
+  it "devrait avoir le bon lien sur le layout S'inscrire !" do
+    visit root_path
+    click_link "S'inscrire !"
+    response.should have_selector('title', :content => "Inscription")
+  end
+  
 end
