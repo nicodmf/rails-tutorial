@@ -1,0 +1,14 @@
+<table class="profile" summary="Information profil">
+  <tr>
+    <td class="main">
+      <h1>
+        <%= gravatar_for @user, :size=>50 %>
+        <%= @user.nom %>
+      </h1>
+    </td>
+    <td class="sidebar round">
+      <strong>Nom</strong> <%= @user.nom %><br />
+      <strong>URL</strong>  <%= link_to user_path(@user), @user %>
+    </td>
+  </tr>
+</table>

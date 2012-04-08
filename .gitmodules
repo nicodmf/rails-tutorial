@@ -1,0 +1,3 @@
+[submodule "sample_app/vendor/plugins/acceptance"]
+	path = sample_app/vendor/plugins/acceptance
+	url = git://github.com/jcoglan/acceptance.git
