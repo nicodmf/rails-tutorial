@@ -124,7 +124,7 @@ describe User do
         wrong_password_user.should be_nil
       end
 
-      it "devrait retourner nil quand un email ne correspond à aucun utilisateur" do
+      it "devrait retourner nil quand un email ne correspond a aucun utilisateur" do
         nonexistent_user = User.authenticate("bar@foo.com", @attr[:password])
         nonexistent_user.should be_nil
       end
