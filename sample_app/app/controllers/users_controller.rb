@@ -17,6 +17,7 @@ class UsersController < ApplicationController
       flash[:success] = "Bienvenue dans l'Application Exemple!"
       redirect_to @user
     else
+      @user.password="";
       @titre = "Inscription"
       render 'new'
     end
