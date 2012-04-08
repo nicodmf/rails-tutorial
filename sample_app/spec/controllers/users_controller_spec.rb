@@ -90,6 +90,10 @@ describe UsersController do
           post :create, :user => @attr
         end.should change(User, :count).by(1)
       end
+      it "devrait identifier l'utilisateur" do
+        post :create, :user => @attr
+        controller.should be_signed_in
+      end
       it "devrait rediriger vers la page d'affichage de l'utilisateur" do
         post :create, :user => @attr
         response.should redirect_to(user_path(assigns(:user)))

@@ -11,8 +11,7 @@ describe PagesController do
 
     it "devrait avoir le bon titre" do
       get 'home'
-      response.should have_selector("title",
-                        :content => "Simple App du Tutoriel Ruby on Rails | Accueil")
+      response.should have_selector("title", :content => "Accueil")
     end
   end
 
@@ -24,9 +23,7 @@ describe PagesController do
 
     it "devrait avoir le bon titre" do
       get 'contact'
-      response.should have_selector("title",
-                        :content =>
-                          "Simple App du Tutoriel Ruby on Rails | Contact")
+      response.should have_selector("title", :content => "Contact")
     end
   end
 
@@ -38,9 +35,7 @@ describe PagesController do
 
     it "devrait avoir le bon titre" do
       get 'about'
-      response.should have_selector("title",
-                        :content =>
-                          "Simple App du Tutoriel Ruby on Rails | A Propos")
+      response.should have_selector("title", :content => "A Propos")
     end
   end
   describe "GET 'help'" do
