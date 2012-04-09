@@ -1,6 +1,6 @@
 SampleApp::Application.configure do
   
-  SSL_PROTO__ = 'http'
+  #SSL_PROTO__ = 'http'
   
   # Settings specified here will take precedence over those in config/application.rb
 
@@ -37,4 +37,5 @@ SampleApp::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+  
 end

@@ -154,6 +154,17 @@ div.field, div.actions {
   color: #fff;
 }
 
+/* User index page */
+
+ul.users {
+  margin-top: 1em;
+}
+
+.users li {
+  list-style: none;
+} 
+
+/* error messages */
 #error_explanation {
   width: 400px;
   border: 2px solid red;
