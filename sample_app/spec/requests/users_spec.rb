@@ -40,21 +40,15 @@ describe "Users" do
 
     describe "l'echec" do
       it "ne devrait pas identifier l'utilisateur" do
-        visit signin_path
-        fill_in "eMail",    :with => ""
-        fill_in "password", :with => ""
-        click_button
+        integration_sign_in(User.create(:email=>"", :password=>""))
         response.should have_selector("div.flash.error", :content => "invalide")
       end
     end
 
     describe "le succes" do
       it "devrait identifier un utilisateur puis le deconnecter" do
-        user = FactoryGirl.create(:user)
-        visit signin_path
-        fill_in "eMail",    :with => user.email
-        fill_in "password", :with => user.password
-        click_button
+#        user = FactoryGirl.create(:user)
+        integration_sign_in(FactoryGirl.create(:user))
         controller.should be_signed_in
         click_link "Deconnexion"
         controller.should_not be_signed_in

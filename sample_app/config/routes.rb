@@ -1,6 +1,16 @@
 SampleApp::Application.routes.draw do
+  
+  SSL_PROTO__ = 'https' unless defined?(SSL_PROTO__)
+  
+  match "sessions(/*path)", :to => redirect { |params, request|
+     "https://" + request.host_with_port + request.fullpath
+  }
+  
   resources :users
-  resources :sessions, :only => [:new, :create, :destroy]
+  
+  scope :constraints => { :protocol => 'https' } do
+    resources :sessions, :only => [:new, :create, :destroy]
+  end
   
   match '/signup',  :to => 'users#new'
   match '/signin',  :to => 'sessions#new'

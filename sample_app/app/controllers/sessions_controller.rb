@@ -4,8 +4,10 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.authenticate(params[:session][:email],
-    params[:session][:password])
+    user = User.authenticate(
+      params[:session][:email],
+      params[:session][:password]
+    )
     if user.nil?
     # Crée un message d'erreur et rend le formulaire d'identification.
       flash.now[:error] = "Combinaison Email/Mot de passe invalide."

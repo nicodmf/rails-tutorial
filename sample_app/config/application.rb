@@ -61,5 +61,13 @@ module SampleApp
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+    
+    #config.force_ssl = true
+    config.action_dispatch.session = {
+      :key    => '_app_session',
+      :secret => '0x0dkfj3927dkc7djdh36rkckdfzsg5487140369jbkig(-(f8b5445452x6595-(*;,=GGHQF)"))'
+    }
+
+    config.session_store = :cookie_store
   end
 end
