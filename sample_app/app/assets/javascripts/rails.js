@@ -375,3 +375,9 @@
   });
 
 })( jQuery );
+
+
+$('*').on('ajax:error', function(event, xhr, status, error) {
+  // insert the failure message inside the "#account_settings" element
+  console.log("error"+xhr.responseText+error)
+});
