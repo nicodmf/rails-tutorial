@@ -5,6 +5,7 @@ SampleApp::Application.routes.draw do
   #scope :constraints => { :protocol => 'https' } do
     resources :sessions, :only => [:new, :create, :destroy]
   #end
+  resources :microposts, :only => [:create, :destroy]
   
   match '/signup',  :to => 'users#new'
   match '/signin',  :to => 'sessions#new'

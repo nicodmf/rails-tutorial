@@ -16,10 +16,13 @@ module SessionsHelper
   def current_user?(user)
     user == current_user
   end
+  
+  def authenticate
+    deny_access unless signed_in?
+  end  
   def signed_in?
     !current_user.nil?
-  end
-  
+  end  
   def sign_out
     #cookies.delete(:remember_token)
     session[:current_user_id] = nil

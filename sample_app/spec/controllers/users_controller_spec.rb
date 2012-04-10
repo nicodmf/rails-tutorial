@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'spec_helper'
 
 describe UsersController do
@@ -5,7 +6,7 @@ describe UsersController do
 
   describe "GET 'index'" do
 
-    describe "pour utilisateur non identifies" do
+    describe "pour utilisateur non identifiés" do
       it "devrait refuser l'acces" do
         get :index
         response.should redirect_to(signin_path)
@@ -14,18 +15,15 @@ describe UsersController do
     end
 
     describe "pour un utilisateur identifie" do
-
       before(:each) do
         @user = test_sign_in(FactoryGirl.create(:user))
         second = FactoryGirl.create(:user, :email => "another@example.com")
         third  = FactoryGirl.create(:user, :email => "another@example.net")
-
         @users = [@user, second, third]
         30.times do
           @users << FactoryGirl.create(:user, :email => FactoryGirl.generate(:email))
         end
       end
-
       it "devrait reussir" do
         get :index
         response.should be_success
@@ -44,19 +42,16 @@ describe UsersController do
         get :index
         response.should_not have_selector("a", :content => "supprimer")
       end
-
       it "devrait avoir le bon titre" do
         get :index
         response.should have_selector("title", :content => "Tous les utilisateurs")
       end
-
       it "devrait avoir un element pour chaque utilisateur" do
         get :index
         @users[0..2].each do |user|
           response.should have_selector("li", :content => user.nom)
         end
-      end
-      
+      end      
       it "devrait paginer les utilisateurs" do
         get :index
         response.should have_selector("div.pagination")
@@ -122,12 +117,17 @@ describe UsersController do
       get :show, :id => @user
       response.should have_selector("h1", :content => @user.nom)
     end
-
     it "devrait avoir une image de profil" do
       get :show, :id => @user
       response.should have_selector("h1>img", :class => "gravatar")
     end
-  
+    it "devrait afficher les micro-messages de l'utilisateur" do
+      mp1 = FactoryGirl.create(:micropost, :user => @user, :content => "Foo bar")
+      mp2 = FactoryGirl.create(:micropost, :user => @user, :content => "Baz quux")
+      get :show, :id => @user
+      response.should have_selector("span.content", :content => mp1.content)
+      response.should have_selector("span.content", :content => mp2.content)
+    end
   end
   
   describe "POST 'create'" do
@@ -141,8 +141,7 @@ describe UsersController do
 
     describe "echec" do
       before(:each) do
-        @attr = { :nom => "", :email => "", :password => "",
-                  :password_confirmation => "" }
+        @attr = { :nom => "", :email => "", :password => "", :password_confirmation => "" }
       end      
       it "ne devrait pas creer d'utilisateur" do
         lambda do
