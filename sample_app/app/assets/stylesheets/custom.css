@@ -26,6 +26,14 @@ section h1 {
   font-size: 200%;
 }
 
+.clearer{
+	height:0px;
+	font-size:0px;
+	min-height:0px;
+	max-height: 0px;
+	clear:both; 	
+}
+
 /* Liens */
 
 a {
@@ -201,27 +209,43 @@ h1.micropost {
   margin-bottom: 0.3em;
 }
 
-table.microposts {
+ol.microposts{
   margin-top: 1em;
+  margin:0px;
+  list-style: none;
 }
 
-table.microposts tr {
-  height: 70px;
+ol.microposts li {
+  /*height: 70px;*/
+  clear:both;
 }
 
-table.microposts tr td.gravatar {
+ol.microposts li div.gravatar {
   border-top: 1px solid #ccc;
-  vertical-align: top;
+  padding:10px;
   width: 50px;
+  height: 100%;
+  line-height: 100%;
+  float: left;
+  
 }
 
-table.microposts tr td.micropost {
+ol.microposts li div.micropost {
   border-top: 1px solid #ccc;
   vertical-align: top;
   padding-top: 10px;
+  overflow: hidden;
+}
+ol.microposts li div.micropost.current_user {
+}
+.microposts li div.supprimer {
+  float:right;
+  width: 80px;
+  text-align: right;
+  line-height: 50px;
 }
 
-table.microposts tr td.micropost span.timestamp {
+.microposts .micropost span.timestamp {
   display: block;
   font-size: 85%;
   color: #666;
@@ -241,6 +265,10 @@ div.user_info span.user_name {
 
 div.user_info span.microposts {
   font-size: 80%;
+}
+
+.message .length_error span.counter{
+	color: red;
 }
 
 form.new_micropost {

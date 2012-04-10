@@ -4,18 +4,17 @@ describe SessionsController do
   render_views
 
   describe "GET 'new'" do
-
     it "devrait reussir" do
       get :new
       response.should be_success
     end
-
     it "devrait avoir le bon titre" do
       get :new
       response.should have_selector('title', :content => "S'identifier")
       #response.should have_selector('title', :content => "Accueil")
     end
   end
+  
   describe "POST 'create'" do
 
     describe "invalid signin" do
@@ -54,7 +53,6 @@ describe SessionsController do
   end
   
   describe "DELETE 'destroy'" do
-
     it "devrait deconnecter un utilisateur" do
       test_sign_in(FactoryGirl.create(:user))
       delete :destroy

@@ -1,5 +1,6 @@
 # encoding: UTF-8
 require 'spec_helper'
+require 'faker'
 
 describe MicropostsController do
   render_views
@@ -80,6 +81,30 @@ describe MicropostsController do
         end.should change(Micropost, :count).by(-1)
       end
     end
+  end
+  
+  describe "INDEX 'index'" do
+    describe "les liens de suppression" do
+      before(:each) do
+        @user = FactoryGirl.create(:user)
+        @another_user = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email))
+        test_sign_in(@user)
+        attr = { :content => Faker::Lorem.sentence(5) }    
+        microposts = []        
+        50.times do
+          microposts << @user.microposts.create(attr)
+        end
+        @href = "/microposts/" +microposts.last.id.to_s
+      end
+      it "sont visibles pour le créateur" do
+        get :index, :user_id => @user        
+        response.should have_selector("a", :content=>"supprimer", :href=>@href)
+      end
+      it "sont invisibles pour une personne lambda" do
+        get :index, :user_id => @another_user
+        response.should_not have_selector("a", :content=>"supprimer", :href=>@href)
+      end
+    end    
   end
   
 end
