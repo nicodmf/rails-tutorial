@@ -10,11 +10,12 @@
 #  encrypted_password :string(255)
 #  salt               :string(255)
 #  admin              :boolean
+#  username           :string(255)
 #
 
 class User < ActiveRecord::Base
   attr_accessor :password
-  attr_accessible :nom, :email, :password, :password_confirmation
+  attr_accessible :username, :nom, :email, :slug, :password, :password_confirmation
 
   scope :admin, where(:admin => true)
   
@@ -23,25 +24,32 @@ class User < ActiveRecord::Base
                            :dependent => :destroy
   has_many :following, :through => :relationships, :source => :followed
   has_many :reverse_relationships, :foreign_key => "followed_id",
-                                   :class_name => "Relationship"
-                                   #:dependent => :destroy
+                                   :class_name => "Relationship",
+                                   :dependent => :destroy
   has_many :followers, :through => :reverse_relationships, :source => :follower                        
 
+  has_many :messages, :dependent => :destroy
+  has_many :messages_received, :foreign_key => "receiver_id", :class_name => "Message"
+  has_many :received, :through => :messages_received, :source => :receiver
+
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  username_regex = /\A[a-z0-9_]+\z/i
   
-  validates :nom,  :presence => true,
-                   :length   => { :maximum => 50 }
+  validates :nom, :presence => true,
+                  :length   => { :maximum => 50 }
   validates :email, :presence   => true,
                     :format     => { :with => email_regex },
                     :uniqueness => { :case_sensitive => false }
+  validates :username, :presence   => true,
+                       :format     => { :with => username_regex },
+                       :uniqueness => { :case_sensitive => false }
   validates :password, :presence     => true,
                        :confirmation => true,
                        :length       => { :within => 6..40 }
   before_save :encrypt_password
   
   def feed
-    # C'est un préliminaire. Cf. chapitre 12 pour l'implémentation complète.
-    Micropost.where("user_id = ?", id)
+    Micropost.from_users_followed_by(self)
   end
   
   # Retour true (vrai) si le mot de passe correspond.
@@ -56,6 +64,10 @@ class User < ActiveRecord::Base
     user && user.has_password?(submitted_password) ? user : nil
   end
   
+  def slug
+    slug = id.to_s + "_" + nom.gsub(/ /, "_").downcase!
+  end
+
   def self.authenticate_with_salt(id, stored_salt)
     user = find_by_id(id)
     (user && user.salt == stored_salt) ? user : nil

@@ -11,13 +11,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120410143323) do
+ActiveRecord::Schema.define(:version => 20120411084919) do
+
+  create_table "messages", :force => true do |t|
+    t.string   "content"
+    t.integer  "user_id"
+    t.integer  "receiver_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "messages", ["receiver_id"], :name => "index_messages_on_receiver_id"
+  add_index "messages", ["user_id"], :name => "index_messages_on_user_id"
 
   create_table "microposts", :force => true do |t|
     t.string   "content"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "in_reply_to"
   end
 
   add_index "microposts", ["user_id"], :name => "index_microposts_on_user_id"
@@ -41,6 +53,9 @@ ActiveRecord::Schema.define(:version => 20120410143323) do
     t.string   "encrypted_password"
     t.string   "salt"
     t.boolean  "admin"
+    t.string   "username"
   end
+
+  add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
 end

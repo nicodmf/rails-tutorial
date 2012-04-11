@@ -61,7 +61,7 @@ describe MicropostsController do
     describe "pour un utilisateur non auteur du message" do
       before(:each) do
         @user = FactoryGirl.create(:user)
-        wrong_user = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email))
+        wrong_user = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email), :username => FactoryGirl.generate(:username))
         test_sign_in(wrong_user)
         @micropost = FactoryGirl.create(:micropost, :user => @user)
       end
@@ -87,7 +87,7 @@ describe MicropostsController do
     describe "les liens de suppression" do
       before(:each) do
         @user = FactoryGirl.create(:user)
-        @another_user = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email))
+        @another_user = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email), :username => FactoryGirl.generate(:username))
         test_sign_in(@user)
         attr = { :content => Faker::Lorem.sentence(5) }    
         microposts = []        

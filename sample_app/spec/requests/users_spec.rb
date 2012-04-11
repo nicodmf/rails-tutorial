@@ -10,6 +10,7 @@ describe "Users" do
         lambda do
           visit signup_path
           fill_in "Nom",          :with => ""
+          fill_in "username",     :with => ""
           fill_in "eMail",        :with => ""
           fill_in "password",     :with => ""
           fill_in "Confirmation", :with => ""
@@ -23,9 +24,10 @@ describe "Users" do
       it "devrait creer un nouvel utilisateur" do
         lambda do
           visit signup_path
-          fill_in "Nom", :with => "Example User"
-          fill_in "eMail", :with => "user@example.com"
-          fill_in "password", :with => "foobar"
+          fill_in "Nom",          :with => "Example User"
+          fill_in "username",     :with => "Anusername"
+          fill_in "eMail",        :with => "user@example.com"
+          fill_in "password",     :with => "foobar"
           fill_in "Confirmation", :with => "foobar"
           click_button
           response.should have_selector("div.flash.success",

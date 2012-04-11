@@ -1,4 +1,10 @@
 <%= render 'shared/error_messages', :object => f.object %>
+<% if inscription %>
+  <%= f.label :username %><br />
+  <%= f.text_field :username %>
+<% else %>
+	<div><%= :username%></div>
+<% end%>
 <div class="field">
   <%= f.label :nom %><br />
   <%= f.text_field :nom %>

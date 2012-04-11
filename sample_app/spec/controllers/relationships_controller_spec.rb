@@ -17,7 +17,7 @@ describe RelationshipsController do
   describe "POST 'create'" do
     before(:each) do
       @user = test_sign_in(FactoryGirl.create(:user))
-      @followed = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email))
+      @followed = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email), :username => FactoryGirl.generate(:username))
     end
     it "devrait créer une relation" do
       lambda do
@@ -36,7 +36,7 @@ describe RelationshipsController do
   describe "DELETE 'destroy'" do
     before(:each) do
       @user = test_sign_in(FactoryGirl.create(:user))
-      @followed = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email))
+      @followed = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email), :username => FactoryGirl.generate(:username))
       @user.follow!(@followed)
       @relationship = @user.relationships.find_by_followed_id(@followed)
     end

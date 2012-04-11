@@ -11,6 +11,7 @@
 #  encrypted_password :string(255)
 #  salt               :string(255)
 #  admin              :boolean
+#  username           :string(255)
 #
 
 require 'spec_helper'
@@ -20,6 +21,7 @@ describe User do
   before(:each) do
     @attr = {
       :nom => "Utilisateur exemple",
+      :username => "utilisateur_exemple",
       :email => "user@example.com",
       :password => "foobar",
       :password_confirmation => "foobar"
@@ -236,6 +238,12 @@ describe User do
     it "devrait inclure le lecteur dans le tableau des lecteurs" do
       @user.follow!(@followed)
       @followed.followers.should include(@user)
+    end
+    it "devrait détruire les micro-messages associés" do
+      user_id = @user.id
+      @user.destroy
+      Relationship.find_by_follower_id(user_id).should be_nil
+      Relationship.find_by_followed_id(user_id).should be_nil
     end    
   end  
   

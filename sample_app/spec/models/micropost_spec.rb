@@ -3,11 +3,12 @@
 #
 # Table name: microposts
 #
-#  id         :integer         not null, primary key
-#  content    :string(255)
-#  user_id    :integer
-#  created_at :datetime        not null
-#  updated_at :datetime        not null
+#  id          :integer         not null, primary key
+#  content     :string(255)
+#  user_id     :integer
+#  created_at  :datetime        not null
+#  updated_at  :datetime        not null
+#  in_reply_to :integer
 #
 
 require 'spec_helper'
@@ -52,8 +53,8 @@ describe Micropost do
   describe "from_users_followed_by" do
 
     before(:each) do
-      @other_user = FactoryGirl.create(:user, :email => Factory.generate(:email))
-      @third_user = FactoryGirl.create(:user, :email => Factory.generate(:email))
+      @other_user = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email), :username => FactoryGirl.generate(:username))
+      @third_user = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email), :username => FactoryGirl.generate(:username))
 
       @user_post  = @user.microposts.create!(:content => "foo")
       @other_post = @other_user.microposts.create!(:content => "bar")

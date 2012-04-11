@@ -15,6 +15,7 @@
     </td>
     <td class="sidebar round">
       <strong>Nom</strong> <%= @user.nom %><br />
+      <strong>Username</strong> <%= @user.username %><br />
       <strong>URL</strong>  <%= link_to user_path(@user), @user %><br />
       <strong>Messages</strong> <%= @user.microposts.count %>
       <%= render 'shared/stats' %>

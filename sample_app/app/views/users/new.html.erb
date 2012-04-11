@@ -1,8 +1,7 @@
 <h1>Inscription</h1>
 
 <%= form_for(@user) do |f| %>
-  <%= render 'shared/error_messages', :object => f.object %>
-  <%= render 'users/fields', :f=>f%>
+  <%= render 'users/fields', :f=>f, :inscription=>true %>
   <div class="actions">
     <%= f.submit "Inscription" %>
   </div>

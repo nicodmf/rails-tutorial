@@ -16,7 +16,7 @@ describe Relationship do
 
   before(:each) do
     @follower = FactoryGirl.create(:user)
-    @followed = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email))
+    @followed = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email), :username => FactoryGirl.generate(:username))
 
     @relationship = @follower.relationships.build(:followed_id => @followed.id)
   end

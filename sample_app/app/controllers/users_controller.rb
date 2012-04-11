@@ -61,19 +61,20 @@ class UsersController < ApplicationController
   end
   
   def following
-    @titre = "Following"
-    @user = User.find(params[:id])
-    @users = @user.following.paginate(:page => params[:page])
-    render 'show_follow'
+    show_follow(:following)
   end
 
   def followers
-    @titre = "Followers"
-    @user = User.find(params[:id])
-    @users = @user.followers.paginate(:page => params[:page])
-    render 'show_follow'
+    show_follow(:followers)
   end
 
+  def show_follow(action)
+    @titre = action.to_s.capitalize
+    @user = User.find(params[:id])
+    @users = @user.send(action).paginate(:page => params[:page])
+    render 'show_follow'
+  end
+  
   private
 
   def visitor

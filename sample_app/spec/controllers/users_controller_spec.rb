@@ -17,11 +17,11 @@ describe UsersController do
     describe "pour un utilisateur identifie" do
       before(:each) do
         @user = test_sign_in(FactoryGirl.create(:user))
-        second = FactoryGirl.create(:user, :email => "another@example.com")
-        third  = FactoryGirl.create(:user, :email => "another@example.net")
+        second = FactoryGirl.create(:user, :email => "another@example.com", :username => FactoryGirl.generate(:username))
+        third  = FactoryGirl.create(:user, :email => "another@example.net", :username => FactoryGirl.generate(:username))
         @users = [@user, second, third]
         30.times do
-          @users << FactoryGirl.create(:user, :email => FactoryGirl.generate(:email))
+          @users << FactoryGirl.create(:user, :email => FactoryGirl.generate(:email), :username => FactoryGirl.generate(:username))
         end
       end
       it "devrait reussir" do
@@ -29,12 +29,12 @@ describe UsersController do
         response.should be_success
       end
       it "devrait montrer les liens de suppression a un administrateur" do
-        @user = test_sign_in(FactoryGirl.create(:user, :email => "admin@example.com", :admin => true))
+        @user = test_sign_in(FactoryGirl.create(:user, :email => "admin@example.com", :admin => true, :username => FactoryGirl.generate(:username)))
         get :index
         response.should have_selector("a", :content => "supprimer")
       end
       it "devrait montrer son propre lien de suppression a un administrateur" do
-        @user = test_sign_in(FactoryGirl.create(:user, :email => "admin@example.com", :admin => true))
+        @user = test_sign_in(FactoryGirl.create(:user, :email => "admin@example.com", :admin => true, :username => FactoryGirl.generate(:username)))
         get :index
         response.should_not have_selector("a", :content => "supprimer", "href" => "/users/{#@user.id}")
       end
@@ -161,7 +161,8 @@ describe UsersController do
     describe "succes" do
       before(:each) do
         @attr = { :nom => "New User", :email => "user@example.com",
-                  :password => "foobar", :password_confirmation => "foobar" }
+                  :password => "foobar", :password_confirmation => "foobar",
+                  :username => "anusername" }
       end
       it "devrait creer un utilisateur" do
         lambda do
@@ -275,7 +276,7 @@ describe UsersController do
     
     describe "pour un utilisateur identifie" do
       before(:each) do
-        wrong_user = FactoryGirl.create(:user, :email => "user@example.net")
+        wrong_user = FactoryGirl.create(:user, :email => "user@example.net", :username => FactoryGirl.generate(:username))
         test_sign_in(wrong_user)
       end
       it "devrait correspondre a l'utilisateur a editer" do
@@ -311,7 +312,7 @@ describe UsersController do
 
     describe "en tant qu'administrateur" do
       before(:each) do
-        @admin = FactoryGirl.create(:user, :email => "admin@example.com", :admin => true)
+        @admin = FactoryGirl.create(:user, :email => "admin@example.com", :admin => true, :username => FactoryGirl.generate(:username))
         test_sign_in(@admin)
       end
       it "devrait detruire l'utilisateur" do
@@ -347,7 +348,7 @@ describe UsersController do
     describe "quand identifié" do
       before(:each) do
         @user = test_sign_in(FactoryGirl.create(:user))
-        @other_user = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email))
+        @other_user = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email), :username => FactoryGirl.generate(:username))
         @user.follow!(@other_user)
       end
       it "devrait afficher les auteurs suivis par l'utilisateur" do

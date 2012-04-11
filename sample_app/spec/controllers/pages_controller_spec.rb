@@ -23,7 +23,7 @@ describe PagesController do
         @count.times do
           @micropost = @user.microposts.create(@attr)
         end
-        other_user = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email))
+        other_user = FactoryGirl.create(:user, :email => FactoryGirl.generate(:email), :username => FactoryGirl.generate(:username))
         other_user.follow!(@user)
       end
       it "devrait montrer le bon nombre de messages" do
